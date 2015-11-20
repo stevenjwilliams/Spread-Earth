@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spread Earth</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
+    <style>
+        #map-canvas {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            border-style: solid;
+            border-color: #2E1C9D;
+            border-width: 15px;
+        }
+            
+    
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&v=3.exp">  </script>
+    <script>
+        </style>
+    
+        <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&v=3.exp">  </script>
+    <script>
+ 
+ 
+ 
+        function initialize() {
+            var mapOptions = {
+                zoom: 2,
+                minZoom: 2,
+                scrollwheel: false,
+                center: {lat: 25, lng: 0},
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                backgroundColor: '#2E1C9D'
+            };
+  
+            var map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+   
+            google.maps.event.addListener(map, 'rightclick', function(e) {
+                placeMarker(e.latLng, map);
+            });
+  
+            google.maps.event.addListener(map, 'center_changed', function() {
+                checkBounds();
+            });
+
+            var allowedBounds = new google.maps.LatLngBounds(
+              new google.maps.LatLng(-70.85200239592201, -179.66565397011107),
+              new google.maps.LatLng(70.903255924231566, 179.57922246681517));
+
+            function checkBounds() {
+                if(allowedBounds.contains(map.getCenter())) {
+                    return;
+                }
+                var mapCenter = map.getCenter();
+                var X = mapCenter.lng();
+                var Y = mapCenter.lat();
+
+                var AmaxX = allowedBounds.getNorthEast().lng();
+                var AmaxY = allowedBounds.getNorthEast().lat();
+                var AminX = allowedBounds.getSouthWest().lng();
+                var AminY = allowedBounds.getSouthWest().lat();
+ 
+                if (Y < AminY) {Y = AminY;}
+                if (Y > AmaxY) {Y = AmaxY;}
+       
+                map.setCenter(new google.maps.LatLng(Y,X));
+            }
+  
+            var infowindow = new google.maps.InfoWindow();
+
+            var polit = [];
+            var sports = [];
+            var music = [];
+  
+            var c4 = new google.maps.LatLng(31, 121);
+            var m4 = new google.maps.Marker({
+                position: c4,
+                map: map,
+                title: 'Shanghai'
+            });
+            polit.push(m4);
+  
+            google.maps.event.addListener(m4, 'click', function() {
+                infowindow.setContent('<a href="http://online.barrons.com/articles/could-shanghai-stocks-sizzle-start-to-fizzle-1417770395" target="_blank">Shanghai</a>')
+                infowindow.open(map,m4);
+            });
+  
+  
+            var c1 = new google.maps.LatLng(38.7489, -90.2890);
+            var m1 = new google.maps.Marker({
+                position: c1,
+                map: map,
+                title: 'Ferguson, MO'
+            });
+            polit.push(m1);
+  
+  
+            google.maps.event.addListener(m1, 'click', function() {
+                infowindow.setContent( '<a href="http://www.cnn.com/SPECIALS/us/ferguson-shooting-protests" target="_blank">Ferguson, MO</a>');
+                infowindow.open(map,m1);
+            });
+  
+            var c2 = new google.maps.LatLng(29.68, -82.32);
+            var m2 = new google.maps.Marker({
+                position: c2,
+                map: map,
+                title: 'Gainesville, FL',
+                labelClass: "label"
+            });
+            polit.push(m2);
+  
+  
+            google.maps.event.addListener(m2, 'click', function() {
+                infowindow.setContent('<a href="http://sports.usatoday.com/2014/12/06/new-florida-coach-jim-mcelwain-confident-he-can-win-with-gators/" target="_blank"">Gaineville, FL</a>');
+                infowindow.open(map,m2);
+            });
+  
+            var c3 = new google.maps.LatLng(30.55, -84.22);
+            var m3 = new google.maps.Marker({
+                position: c3,
+                map: map,
+                title: 'Tallahassee, FL'
+            });
+            sports.push(m3);
+  
+            google.maps.event.addListener(m3, 'click', function() {
+                infowindow.setContent( '<a href="http://www.tallahassee.com/story/news/local/2014/12/05/3-emergency-dispatchers-fired/19947495/" target="_blank"">Tallahassee, FL</a>');
+                infowindow.open(map,m3);
+            });
+  
+            var c5 = new google.maps.LatLng(34, -118);
+            var m5 = new google.maps.Marker({
+                position: c5,
+                map: map,
+                title: 'Los Angeles'
+            });
+            sports.push(m5);
+  
+  
+  
+            google.maps.event.addListener(m5, 'click', function() {
+                infowindow.setContent( '<a href="http://www.usatoday.com/story/news/nation/2014/12/05/los-angeles-police-investigating-cosby-abuse-claim/19987015/" target="_blank">Los Angeles</a>');
+                infowindow.open(map,m5);
+            });
+  
+            var c6 = new google.maps.LatLng(-19, 29);
+            var m6 = new google.maps.Marker({
+                position: c6,
+                map: map,
+                title: 'Zimbabwe'
+            });
+            music.push(m6);
+  
+  
+  
+            google.maps.event.addListener(m6, 'click', function() {
+                infowindow.setContent('<a href="http://www.bbc.com/news/world-africa-30363052" target="_blank" >Zimbabwe</a>');
+                infowindow.open(map,m6);
+            });
+  
+            var c7 = new google.maps.LatLng(55, 37);
+            var m7 = new google.maps.Marker({
+                position: c7,
+                map: map,
+                title: 'Moscow'
+            });
+            music.push(m7);
+  
+  
+            google.maps.event.addListener(m7, 'click', function() {
+                infowindow.setContent( '<a href="http://abcnews.go.com/International/wireStory/reports-french-leader-arrives-moscow-27410938" target="_blank">Moscow</a>');
+                infowindow.open(map,m7);
+            });
+  
+  
+            var c8 = new google.maps.LatLng(38, -77);
+            var m8 = new google.maps.Marker({
+                position: c8,
+                map: map,
+                title: 'Washington DC'
+            });
+            music.push(m8);
+  
+  
+            google.maps.event.addListener(m8, 'click', function() {
+                infowindow.setContent( '<a href="http://www.huffingtonpost.com/2014/12/05/white-house-racial-profil_n_6279568.html" target="_blank">Washington DC</a>');
+                infowindow.open(map,m8);
+            });
+  
+  
+            var c9 = new google.maps.LatLng(53, -2);
+            var m9 = new google.maps.Marker({
+                position: c9,
+                map: map,
+                title: 'Manchester City'
+            });
+            sports.push(m9);
+  
+  
+            google.maps.event.addListener(m9, 'click', function() {
+                infowindow.setContent('<a href="http://www.telegraph.co.uk/sport/football/teams/manchester-city/11277373/Manchester-Citys-new-150m-academy-The-English-Milan-Lab-from-which-they-aim-to-rule-Europe.html" target="_blank">Manchester City</a>');
+                infowindow.open(map,m9);
+            });
+
+            google.maps.event.addDomListener(document.getElementById('politics'),
+                    'click', function() {
+                        if(document.getElementById('politics').checked){
+                            for(var i = 0; i<polit.length; i++){
+                                polit[i].setVisible(true);
+                            }
+                        }
+                        else{
+                            for(var i = 0; i<polit.length; i++){
+                                polit[i].setVisible(false);
+                            }
+                        }
+                    });
+
+            google.maps.event.addDomListener(document.getElementById('sports'),
+                'click', function() {
+                    if(document.getElementById('sports').checked){
+                        for(var i = 0; i<sports.length; i++){
+                            sports[i].setVisible(true);
+                        }
+                    }
+                    else{
+                        for(var i = 0; i<sports.length; i++){
+                            sports[i].setVisible(false);
+                        }
+                    }
+                });
+
+            google.maps.event.addDomListener(document.getElementById('science'),
+               'click', function() {
+                   if(document.getElementById('science').checked){
+                       for(var i = 0; i<science.length; i++){
+                           science[i].setVisible(true);
+                       }
+                   }
+                   else{
+                       for(var i = 0; i<science.length; i++){
+                           science[i].setVisible(false);
+                       }
+                   }
+               });
+
+            google.maps.event.addDomListener(document.getElementById('funny'),
+                        'click', function() {
+                            if(document.getElementById('funny').checked){
+                                for(var i = 0; i<funny.length; i++){
+                                    funny[i].setVisible(true);
+                                }
+                            }
+                            else{
+                                for(var i = 0; i<funny.length; i++){
+                                    funny[i].setVisible(false);
+                                }
+                            }
+                        });
+
+            google.maps.event.addDomListener(document.getElementById('music'),
+                'click', function() {
+                    if(document.getElementById('music').checked){
+                        for(var i = 0; i<music.length; i++){
+                            music[i].setVisible(true);
+                        }
+                    }
+                    else{
+                        for(var i = 0; i<music.length; i++){
+                            music[i].setVisible(false);
+                        }
+                    }
+                });
+        }
+
+        var markers = [];
+ 
+
+
+        function showMarkers() {
+            setAllMap(map);
+        }
+
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        var post = new google.maps.InfoWindow({maxWidth:200});
+        var marker = new google.maps.Marker({
+            visible:false
+        });
+   
+        function placeMarker(position, map) {
+            marker.setPosition(position);
+            marker.setMap(map);
+            marker.setVisible();
+            map.panTo(position);
+            var html ='<form action="MAILTO:spreadearth@gmail.com?subject=SpreadEarth" method="post" enctype="multipart/form-data">'+
+         '<b>'+'SpreadEarth'+'</b>'+ '<br>'+
+         '<textarea rows="7" cols="22" placeholder="Insert Text" name="story">'+
+
+         '</textarea>'+
+         '<br>'+
+           'Upload Image/Video:'+'<input type="file" name="file" ALLOW="text/*">'+'<br>'+
+           '<input type="submit" name="Submit" value = "Submit">'+
+
+         '</form>'
+            ;
+            var d = new Date();
+            var data=  d.toDateString();
+            post.setContent(data+html);
+            post.open(map, marker);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+  <div>
+    <div id="map-canvas"></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <div>
+      <input type="checkbox" checked="checked"
+          id="politics" value="Politics">
+      <label>Politics</label>
+
+      <input type="checkbox" checked="checked" 
+          id="sports" value="Sports">
+      <label>Sports</label>
+      
+      <input type="checkbox" checked="checked" 
+          id="science" value="Science">
+      <label>Science</label>
+
+      <input type="checkbox" checked="checked" 
+          id="funny" value="Funny">
+      <label>Funny</label>
+
+      <input type="checkbox" checked="checked"
+          id="music" value="Music">
+      <label>Music</label>
+
+    </div>
+    </div>
+  </body>
+</html>
